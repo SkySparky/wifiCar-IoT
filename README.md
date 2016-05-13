@@ -6,24 +6,32 @@
 
 ### Подключение ###
 
-![WiFi-Bot-View.png]https://bitbucket.org/lartiot/wifi-bot-code/src/3073f289120371fcf5da55ed6e5f1fe7f7aa14f9/Doc/WiFi-Bot-View.png)
+![WiFi-Bot-View.png](https://bitbucket.org/repo/pkapBE/images/2052293262-WiFi-Bot-View.png)
 
-### How do I get set up? ###
+### Начало работы ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+Откройте ino-файл в среде Arduino IDE и выполните действия, отмеченные  описанные в начале файла 
 
-### Contribution guidelines ###
 
-* Writing tests
-* Code review
-* Other guidelines
+```
+#!c++
 
-### Who do I talk to? ###
+// 
+// TODO!!!:
+// http://arduino.esp8266.com/stable/package_esp8266com_index.json         - add to board manager
+// https://github.com/Links2004/arduinoWebSockets/blob/master/library.json - add to library wifisocket
+// https://github.com/esp8266/arduino-esp8266fs-plugin                     - Read for upload filesystem with WEB-interface
+// 
 
-* Repo owner or admin
-* Other community or team contact
+```
+
+```
+#!c++
+
+// TODO!!!!:
+// Input name and password for you AP
+const char* ssid     = "********";
+const char* password = "********";
+```
+
+![2016-05-13_04-31-33.png](https://bitbucket.org/repo/pkapBE/images/2119624233-2016-05-13_04-31-33.png)
