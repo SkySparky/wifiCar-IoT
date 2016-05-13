@@ -6,7 +6,7 @@
 
 ### Подключение ###
 
-
+![WiFi-Bot-View.png]https://bitbucket.org/lartiot/wifi-bot-code/src/3073f289120371fcf5da55ed6e5f1fe7f7aa14f9/Doc/WiFi-Bot-View.png)
 
 ### How do I get set up? ###
 
