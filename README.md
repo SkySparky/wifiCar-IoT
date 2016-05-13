@@ -1,12 +1,12 @@
-# README #
+# Плата WiFi-Bot #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+Плата предназначена для конструирования различных подвижных платформ, с возможностью беспроводного подключения к локальной и глобальной (Internet) сети через 
+локальные точки достпупа WiFi (AP) или выполнять роль AP. Программирование платы осуществляется в среде Arduino IDE. На плате установлена Flash-память объемом
+4Мб, из которых 1Мб выделяется для программы и 3Мб для файловой системы, предназначенной для сохранения настроект, файлов HTTP-сервера и т.п.
 
-### What is this repository for? ###
+### Подключение ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+
 
 ### How do I get set up? ###
 
