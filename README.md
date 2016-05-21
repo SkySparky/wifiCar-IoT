@@ -4,7 +4,7 @@
 локальные точки достпупа WiFi (AP) или выполнять роль AP. Программирование платы осуществляется в среде Arduino IDE. На плате установлена Flash-память объемом
 4Мб, из которых 1Мб выделяется для программы и 3Мб для файловой системы, предназначенной для сохранения настроект, файлов HTTP-сервера и т.п.
 
-![Электрическая схема.](https://bitbucket.org/lartiot/wifi-bot-code/downloads/wifi-car-schematic.pdf)
+[Электрическая схема.](https://bitbucket.org/lartiot/wifi-bot-code/downloads/wifi-car-schematic.pdf)
 
 ### Подключение ###
 
