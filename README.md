@@ -5,5 +5,5 @@
 4Мб, из которых 1Мб выделяется для программы и 3Мб для файловой системы, предназначенной для сохранения настроект, файлов HTTP-сервера и т.п.
 
 [Электрическая схема.](https://bitbucket.org/lartiot/wifi-bot-code/downloads/wifi-car-schematic.pdf)
-
-[Подробное описание.](https://bitbucket.org/lartiot/wifi-bot-code/wiki/edit/Home)
+[Внешний вид платы.](https://bitbucket.org/repo/pkapBE/images/2795471447-2016-05-27_22-01-25.png)
+[Подробное описание.](https://bitbucket.org/lartiot/wifi-bot-code/wiki/Home)
