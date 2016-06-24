@@ -1,0 +1,191 @@
+<html>
+
+  <script src="http://code.jquery.com/jquery-1.12.1.js">  </script>
+  <head>
+    <title>WiFi car</title>
+    <meta charset="utf-8" />
+
+    <style>
+      body { background-color: #cccccc; font-family: Arial, Helvetica, Sans-Serif; Color: #000088; }
+    </style>
+  </head>
+
+  <body>
+    <h1 class="js-label">WiFi car</h1>
+<div class="js-field-t">	
+  <svg xmlns:svg="http://www.w3.org/2000/svg"
+     xmlns="http://www.w3.org/2000/svg"
+     version="1.1"
+     width="600"
+     height="600"
+     id="SVGImage" >
+    
+    <style>
+      .draggable {
+        cursor: move;
+      }
+    </style>
+
+
+    <rect x="0.5" y="0.5" width="599" height="599" fill="none" stroke="black"/>
+    <rect x="0.5" y="0.5" width="300" height="300" fill="none" stroke="black"/>
+    <rect x="300" y="300" width="599" height="599" fill="none" stroke="black"/>
+
+
+    <circle class="cl-border" id="border" cx="50%" cy="50%" r="300"  fill="none" style="stroke:rgb(0,128,0);stroke-width:4" fill-opacity="0" />              
+    <circle class="draggable" id="joystic"  cx="50%" cy="50%" r="50" fill="blue" />          
+</svg>
+</div>
+
+<div>
+    <h1>Servo control</h1>
+    <input id="SERVO1" type="range" min="0" max="180" />
+    <p class="note">Servo value 1: <span id="SERVO1Value">0</span></p>
+    <input id="SERVO2" type="range" min="0" max="180" />
+    <p class="note">Servo value 2: <span id="SERVO2Value">0</span></p>
+    <input id="SERVO3" type="range" min="0" max="180" />
+    <p class="note">Servo value 3: <span id="SERVO3Value">0</span></p>
+    <input id="SERVO4" type="range" min="0" max="180" />
+    <p class="note">Servo value 4: <span id="SERVO4Value">0</span></p>
+ </div>
+<div>
+    <h1>ADC values</h1>
+    <p class="note">ADC value: <span id="ADCValue">0</span></p>
+    <p class="note">VCC value: <span id="VCCValue">0</span></p>
+ </div>
+<div>
+    <h1>MPU6050</h1>
+    <ul>
+        <li>acceleration x: <span id="accelerationX"></span> g</li>
+        <li>acceleration y: <span id="accelerationY"></span> g</li>
+        <li>acceleration z: <span id="accelerationZ"></span> g</li>
+        <li>rotation alpha: <span id="rotationAlpha"></span> degree</li>
+        <li>rotation beta:  <span id="rotationBeta"></span> degree</li>
+        <li>rotation gamma: <span id="rotationGamma"></span> degree</li>
+    </ul>
+</div>
+  <script>
+      $( function()
+        {            
+            for( var i = 1 ; i < 5 ; i++ )
+            {   $('#SERVO'+i).mousemove( function()
+                    {
+                        $('#'+this.id+'Value').text( this.value ); 
+                        var msg = this.id + ":" + this.value + ";";//"" + String( this.id ) + ":" + String( this.value ) + ";";
+                        //console.log( msg );
+
+                        if (connection && connection.readyState == 1)	connection.send(msg);
+                    } );
+                $('#SERVO'+i).change();
+                $('#SERVO'+i).change( function(){ $('#SERVO'+i).mousemove(); } );    
+             }      
+        }
+      );  
+      var pointerEventToXY = function(e){
+      //e.preventDefault();
+      var out = {x:0, y:0};
+      if(e.type == 'touchstart' || e.type == 'touchmove' || e.type == 'touchend' || e.type == 'touchcancel'){
+        var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+        out.x = touch.pageX;
+        out.y = touch.pageY;
+      } else if (e.type == 'mousedown' || e.type == 'mouseup' || e.type == 'mousemove' || e.type == 'mouseover'|| e.type=='mouseout' || e.type=='mouseenter' || e.type=='mouseleave') {
+        out.x = e.pageX;
+        out.y = e.pageY;
+
+      }
+	  
+	  if( e.type == 'touchstart'|| e.type == 'mousedown' ) 
+	  { 
+		f_down = true;
+		$('#border').attr('fill-opacity','.5').attr( 'fill' , 'rgb(0,128,0)' );
+	  }
+	  if( e.type == 'touchmove'|| e.type == 'mousemove' ) 
+	  { 
+		if( f_down ) { send_to_car( out.x , out.y ); f_no_zero = true; }
+			       
+		else 		 { if( f_no_zero ) { send_to_car( 300 , 300 ); f_no_zero = false;} }
+
+	  }
+	  if( e.type == 'touchend'|| e.type == 'mouseup' ) 
+	  { 
+		f_down = false;
+		$('#border').attr( 'fill' , 'none' );
+	  }
+	  
+	  $(".js-label").text( out.x+" , "+out.y );
+      return out;
+    };
+  
+    $('.js-field-t').on('mousedown touchstart touchmove mousemove touchend mouseup', function(e){ //
+        pointerEventToXY(e); // will return obj ..kind of {x:20,y:40}
+	});
+  
+   var f_down = false;
+   var f_no_zero = true;
+   var f_connection = false;
+	
+  $(".js-field").mousedown( function( evt ) { f_down  = true; } );  
+  $(".js-field").mouseup( function( evt ) { f_down = false; } );
+
+  $(".js-field").mousemove( 
+	function( evt )
+	{	
+		if( f_down ) send_to_car( evt.pageX , evt.pageY );
+		else         send_to_car( 300 , 300 );
+	}
+  );  
+
+  
+  function truncate(value) { if (value < 0) { return Math.ceil(value); } return Math.floor(value); }
+  
+  function send_to_car(dx, dy) 
+  {
+     dx -= 300;
+     dy -= 300;
+     var x = truncate((dx / 300) * 1024 * 2);
+     var y = truncate((dy / 300) * 1024 * 2);
+     var speedL = y + x;
+     var speedR = y - x;
+     msg = "X:" + String(-speedR) + ";Y:" + String(speedL) + ";";
+     if (connection && connection.readyState == 1) connection.send(msg);
+  }
+  
+  var connection = new WebSocket('ws://'+location.host+':81/');
+
+  connection.onopen = function () { var t = setInterval(function()
+	{
+	 if (connection && connection.readyState == 1) 
+		connection.send("adc:1");},300);  };
+
+   connection.onerror = function (error) 
+   {
+   };
+
+   connection.onmessage = function (e) 
+   {  
+    var carData = JSON.parse( e.data);
+    if( "adc" in carData ) $('#ADCValue').text( carData.adc );
+    if( "vcc" in carData ) $('#VCCValue').text( carData.vcc );
+    //console.log( carData );
+    if( "accel" in carData )
+    {
+        $('#accelerationX').text( carData.accel[0] );
+        $('#accelerationY').text( carData.accel[1] );
+        $('#accelerationZ').text( carData.accel[2] );
+    }
+    if( "gyro" in carData )
+    {
+        $('#rotationAlpha').text( carData.gyro[0] );
+        $('#rotationBeta' ).text( carData.gyro[1] );
+        $('#rotationGamma').text( carData.gyro[2] );
+    }
+   	//console.log('Server: ', carData );
+
+   };
+   
+   connection.onclose = function( event ) {   }
+
+   </script>
+
+  </body>
+</html>
