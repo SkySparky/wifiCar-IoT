@@ -1,0 +1,217 @@
+<title>
+    WiFi remove control</title>
+
+<!-- Bootstrap core -->
+<link href="bootstrap.css" rel="stylesheet">
+<style>
+    .main {
+        font-size: 32px;
+    }
+</style>
+
+<head>
+    <script type="text/javascript" src="jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="underscore-min.js"></script>
+    <script type="text/javascript" src="backbone-min.js"></script>
+    <script type="text/javascript" src="joystick_view.js"></script>
+    <script type="text/javascript" src="smoothie.js"></script>
+</head>
+
+
+<style>
+    html,
+    body {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 0;
+        margin: 0;
+    }
+    
+    #joystick-content {
+        position: relative;
+        left: 0;
+        top: 0;
+        height: 59%;
+        width: 100%;
+        background: rgba(0, 255, 0, 0.1);
+    }
+</style>
+
+<body>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="http://yoannmoinet.github.io/nipplejs/stylesheets/styles.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="http://yoannmoinet.github.io/nipplejs/stylesheets/github-light.css" media="screen" title="no title" charset="utf-8">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var posX = 0;
+            var posY = 0;
+            $("#message-top").html('Started!');
+            var wsConnection = new WebSocket("ws://" + location.host + "/", ['lartwificar']);
+            wsConnection.onopen = function () {
+                $("#message-top").html('Websocket open!');
+                wsConnection.send('Message from Browser to ESP8266 yay its Working!! ' + new Date());
+                wsConnection.send('ping');
+                setInterval(function () {
+                    wsConnection.send('Time: ' + new Date());
+                }, 20);
+            };
+            wsConnection.onerror = function (error) {
+                $("#message-top").html('WebSocket Error ');
+                console.log('WebSocket Error ', error);
+            };
+            wsConnection.onmessage = function (e) {
+                $("#message-top").html('Server: ' + e.data);
+                console.log('Server: ', e.data);
+            };
+        });
+
+        function getOffset_(el) {
+            var _x = 0;
+            var _y = 0;
+            while (el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
+                _x += el.offsetLeft - el.scrollLeft;
+                _y += el.offsetTop - el.scrollTop;
+                el = el.offsetParent;
+            }
+            return {
+                top: _y,
+                left: _x
+            };
+        }
+
+        function getOffset(el) {
+            el = el.getBoundingClientRect();
+            return {
+                left: el.left + window.scrollX,
+                top: el.top + window.scrollY
+            }
+        }
+    </script>
+    <div class="container">
+        <div class="header">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    <li role="presentation" class="active"><a href="/">Status</a></li>
+                    <li role="presentation"><a href="/config.html">Configuration</a></li>
+                </ul>
+            </nav>
+            <h3 class="text-muted">WEB UI controller</h3> </div>
+        <div class="row">
+            <h2>&nbsp; </h2>
+            <div id="message-top" class="alert alert-warning"> </div>
+            <div class="col-xs-offset-0 col-md-offset-0 col-xs-6 col-md-6 ">
+                <div class="panel panel-default">
+                    <div class="panel-heading ">
+                        <h3 class="panel-title ">Joystick</h3>
+                    </div>
+                    <div class="panel-body ">
+                        <div id="joystick-content"></div>
+                        <script src="nipplejs.js" charset="utf-8"></script>
+                        <script>
+                            var joystick = nipplejs.create({
+                                zone: document.getElementById('joystick-content'),
+                                mode: 'static',
+                                position: {
+                                    left: '50%',
+                                    top: '50%'
+                                },
+                                color: 'green',
+                                size: 150
+                            });
+
+                            var line1 = new TimeSeries();
+                            var line2 = new TimeSeries();
+                            var smoothie = new SmoothieChart({
+                                grid: {
+                                    strokeStyle: 'rgb(125, 0, 0)',
+                                    fillStyle: 'rgb(60, 0, 0)',
+                                    lineWidth: 1,
+                                    millisPerLine: 500,
+                                    verticalSections: 6
+                                }
+                            });
+                            smoothie.addTimeSeries(line1, {
+                                strokeStyle: 'rgb(0, 255, 0)',
+                                fillStyle: 'rgba(0, 255, 0, 0.4)',
+                                lineWidth: 3
+                            });
+                            smoothie.addTimeSeries(line2, {
+                                strokeStyle: 'rgb(255, 0, 255)',
+                                fillStyle: 'rgba(255, 0, 255, 0.3)',
+                                lineWidth: 3
+                            });
+
+                            smoothie.streamTo(document.getElementById("mycanvas"), 1000 /*delay*/ );
+                            console.log(joystick);
+
+                            joystick.on('start move end dir plain', function (evt, nipple) {
+                                line1.append(new Date().getTime(), nipple.position.x);
+                                smoothie.addTimeSeries(line1);
+                                line2.append(new Date().getTime(), nipple.position.y);
+                                smoothie.addTimeSeries(line2);
+
+                                var rect = $("#joystick-content")[0].getBoundingClientRect();
+                                var xDiv = rect.left + rect.width / 2;
+                                var yDiv = rect.top + rect.height / 2;
+
+                                console.log($("#joystick-content")[0].getBoundingClientRect());
+                                $("#xVal").html(nipple.position.x - xDiv);
+                                $("#yVal").html(nipple.position.y - yDiv);
+                                console.log(nipple.position.x);
+                                console.log(nipple.position.y);
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-offset-0 col-md-offset-0 col-xs-6 col-md-6 ">
+                <div class="panel panel-default">
+                    <div class="panel-heading ">
+                        <h3 class="panel-title ">Video</h3>
+                    </div>
+                    <div class="panel-body ">
+                        <img src="http://pihost.local:8080/?action=stream" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-offset-0 col-md-offset-0 col-xs-6 col-md-6 ">
+                <div class="panel panel-default">
+                    <div class="panel-heading ">
+                        <h3 class="panel-title ">Position</h3>
+                    </div>
+                    <div class="panel-body ">
+                        <h1 id="xVal" class="text-left main">x: ...</h1>
+                        <h1 id="yVal" class="text-left main">y: ...</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-offset-0 col-md-offset-0 col-xs-6 col-md-6 ">
+                <div class="panel panel-default">
+                    <div class="panel-heading ">
+                        <h3 class="panel-title ">Plotter</h3>
+                    </div>
+                    <div class="panel-body ">
+                        <canvas id="mycanvas" width="400" height="100"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-offset-0 col-md-offset-0 ">
+                <div class="col-xs-12 col-md-12 ">
+                    <!--                    <div class="panel panel-default">
+                        <div class="panel-heading ">
+                            <h3 class="panel-title ">Plotter</h3>
+                        </div>
+                        <div class="panel-body "> -->
+
+                    <!--   </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

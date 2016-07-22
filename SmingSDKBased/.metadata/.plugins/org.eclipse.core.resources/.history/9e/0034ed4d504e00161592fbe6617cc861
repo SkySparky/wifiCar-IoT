@@ -1,0 +1,214 @@
+<title>WiFi remove control</title>
+
+<!-- Bootstrap core -->
+<link href="bootstrap.css" rel="stylesheet">
+<style>
+.main {
+	font-size: 32px;
+}
+</style>
+
+<head>
+<meta charset="utf-8">
+<script type="text/javascript" src="jquery.js"></script>
+</head>
+
+
+<style>
+html, body {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding: 0;
+	margin: 0;
+}
+
+#joystick-content {
+	position: relative;
+	left: 0;
+	top: 0;
+	height: 59%;
+	width: 100%;
+	background: rgba(0, 255, 0, 0.1);
+}
+</style>
+
+<body>
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							var posX = 0;
+							var posY = 0;
+							$("#message-top").html('Started!');
+							var wsConnection = new WebSocket(
+									"ws://localhost:8081");
+							//+ location.host + "/" );
+
+							wsConnection.onopen = function() {
+								$("#message-top").html('Websocket open!');
+								wsConnection
+										.send('Message from Browser to ESP8266 yay its Working!! '
+												+ new Date());
+								wsConnection.send('ping');
+								setInterval(function() {
+									wsConnection.send('Time: ' + new Date());
+								}, 20);
+							};
+
+							wsConnection.onerror = function(error) {
+								$("#message-top").html('WebSocket Error ');
+								console.log('WebSocket Error ', error);
+							};
+
+							wsConnection.onmessage = function(e) {
+								$("#message-top").html('Server: ' + e.data);
+								console.log('Server: ', e.data);
+							};
+						});
+
+/* 		function getOffset_(el) {
+			var _x = 0;
+			var _y = 0;
+			while (el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
+				_x += el.offsetLeft - el.scrollLeft;
+				_y += el.offsetTop - el.scrollTop;
+				el = el.offsetParent;
+			}
+			return {
+				top : _y,
+				left : _x
+			};
+		}
+
+		function getOffset(el) {
+			el = el.getBoundingClientRect();
+			return {
+				left : el.left + window.scrollX,
+				top : el.top + window.scrollY
+			}
+		} */
+	</script>
+	<div class="container">
+		<div class="header">
+			<nav>
+				<ul class="nav nav-pills pull-right">
+					<li role="presentation" class="active"><a href="/">Status</a></li>
+					<li role="presentation"><a href="/config.html">Configuration</a></li>
+				</ul>
+			</nav>
+			<h3 class="text-muted">WEB UI controller</h3>
+		</div>
+		<div class="row">
+			<h2>&nbsp;</h2>
+			<div id="message-top" class="alert alert-warning"></div>
+			<div class="col-xs-offset-0 col-md-offset-0 col-xs-6 col-md-6 ">
+				<div class="panel panel-default">
+					<div class="panel-heading ">
+						<h3 class="panel-title ">Joystick</h3>
+					</div>
+					<div class="panel-body ">
+						<div id="joystick-content"></div>
+						<script src="nipplejs.js" charset="utf-8"></script>
+						<script>
+						var absJoyPos = { "force" : "0" , "angle" : "0" , "dirAlpha" : "0" , "dirX" : "0" , "dirY" : "0" };
+						
+						
+							function calcMotorPower( data ) {
+								var force = data.force;
+								if( force > 1 ) force = 1;
+								
+								force = force * 100; // in percent
+								
+								absJoyPos.force    = force;
+								absJoyPos.angle    = data.angle.degree;
+								absJoyPos.dirAlpha = data.direction.angle;
+								absJoyPos.dirX     = data.direction.x;
+								absJoyPos.dirY     = data.direction.y;
+								
+								console.log( 'force: ' +  Math.round( force ) + '  alpha: ' + data.angle.degree );
+
+							}
+							
+							
+							/* ------------------ Joystic events ---------------------- */
+							function bindNipple() {
+								joystick
+										.on('start end', function(evt, data) {
+											//calcMotorPower( data );
+										})
+										.on('move', function(evt, data) {
+											calcMotorPower( data );
+										})
+										.on(
+												'dir:up   plain:up   dir:left  plain:left'
+											  + 'dir:down plain:down dir:right plain:right',
+												function(evt, data) {
+													calcMotorPower( data );
+												}).on('pressure',
+												function(evt, data) {
+													calcMotorPower( data );
+												});
+							}
+
+							/* ------------------ Joystic create ---------------------- */
+							var joystick = nipplejs.create({
+								zone : document
+										.getElementById('joystick-content'),
+								mode : 'static',
+								position : {
+									left : '50%',
+									top : '50%'
+								},
+								color : 'green',
+								size : 150
+							});
+
+							bindNipple();
+
+							joystick.on('start move end dir plain', function(
+									evt, nipple) {
+
+								$("#jForce").html( "force: " + absJoyPos.force );
+								$("#jAngle").html( "angle: " + absJoyPos.angle );
+								$("#jDirAlpha").html("dirAlpha: " + absJoyPos.dirAlpha   );
+								$("#jDirX").html("dirX: " + absJoyPos.dirX );
+								$("#jDirY").html("dirY: " + absJoyPos.dirY );
+								
+								console.log( absJoyPos );
+							});
+						</script>
+					</div>
+				</div>
+			</div>
+			<!--			<div class="col-xs-offset-0 col-md-offset-0 col-xs-6 col-md-6 ">
+				<div class="panel panel-default">
+					<div class="panel-heading ">
+						<h3 class="panel-title ">Video</h3>
+					</div>
+					<div class="panel-body ">
+						<img src="http://pihost.local:8080/?action=stream" />
+					</div>
+				</div>
+			</div> -->
+			<div class="col-xs-offset-0 col-md-offset-0 col-xs-6 col-md-6 ">
+				<div class="panel panel-default">
+					<div class="panel-heading ">
+						<h3 class="panel-title ">Position</h3>
+					</div>
+					<div class="panel-body ">
+						<h1 id="jForce" class="text-left main">force: ...</h1>
+						<h1 id="jAngle" class="text-left main">angle: ...</h1>
+						<h1 id="jDirAlpha"   class="text-left main">dirAlpha  : ...</h1>
+						<h1 id="jDirX" class="text-left main">dirX: ...</h1>
+						<h1 id="jDirY" class="text-left main">dirX: ...</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

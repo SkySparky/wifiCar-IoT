@@ -1,191 +1,210 @@
-<html>
+<title>WiFi remove control</title>
 
-  <script src="http://code.jquery.com/jquery-1.12.1.js">  </script>
-  <head>
-    <title>WiFi car</title>
-    <meta charset="utf-8" />
+<!-- Bootstrap core -->
+<link href="bootstrap.css" rel="stylesheet">
+<style>
+.main {
+	font-size: 32px;
+}
+</style>
 
-    <style>
-      body { background-color: #cccccc; font-family: Arial, Helvetica, Sans-Serif; Color: #000088; }
-    </style>
-  </head>
-
-  <body>
-    <h1 class="js-label">WiFi car</h1>
-<div class="js-field-t">	
-  <svg xmlns:svg="http://www.w3.org/2000/svg"
-     xmlns="http://www.w3.org/2000/svg"
-     version="1.1"
-     width="600"
-     height="600"
-     id="SVGImage" >
-    
-    <style>
-      .draggable {
-        cursor: move;
-      }
-    </style>
+<head>
+<meta charset="utf-8">
+<script type="text/javascript" src="jquery.js"></script>
+</head>
 
 
-    <rect x="0.5" y="0.5" width="599" height="599" fill="none" stroke="black"/>
-    <rect x="0.5" y="0.5" width="300" height="300" fill="none" stroke="black"/>
-    <rect x="300" y="300" width="599" height="599" fill="none" stroke="black"/>
+<style>
+html, body {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding: 0;
+	margin: 0;
+}
 
+#joystick-content {
+	position: relative;
+	left: 0;
+	top: 0;
+	height: 59%;
+	width: 100%;
+	background: rgba(0, 255, 0, 0.1);
+}
+</style>
 
-    <circle class="cl-border" id="border" cx="50%" cy="50%" r="300"  fill="none" style="stroke:rgb(0,128,0);stroke-width:4" fill-opacity="0" />              
-    <circle class="draggable" id="joystic"  cx="50%" cy="50%" r="50" fill="blue" />          
-</svg>
-</div>
+<body>
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							var posX = 0;
+							var posY = 0;
+							$("#message-top").html('Started!');
+							var wsConnection = new WebSocket(
+									"ws://localhost:8081");
+							//+ location.host + "/" );
 
-<div>
-    <h1>Servo control</h1>
-    <input id="SERVO1" type="range" min="0" max="180" />
-    <p class="note">Servo value 1: <span id="SERVO1Value">0</span></p>
-    <input id="SERVO2" type="range" min="0" max="180" />
-    <p class="note">Servo value 2: <span id="SERVO2Value">0</span></p>
-    <input id="SERVO3" type="range" min="0" max="180" />
-    <p class="note">Servo value 3: <span id="SERVO3Value">0</span></p>
-    <input id="SERVO4" type="range" min="0" max="180" />
-    <p class="note">Servo value 4: <span id="SERVO4Value">0</span></p>
- </div>
-<div>
-    <h1>ADC values</h1>
-    <p class="note">ADC value: <span id="ADCValue">0</span></p>
-    <p class="note">VCC value: <span id="VCCValue">0</span></p>
- </div>
-<div>
-    <h1>MPU6050</h1>
-    <ul>
-        <li>acceleration x: <span id="accelerationX"></span> g</li>
-        <li>acceleration y: <span id="accelerationY"></span> g</li>
-        <li>acceleration z: <span id="accelerationZ"></span> g</li>
-        <li>rotation alpha: <span id="rotationAlpha"></span> degree</li>
-        <li>rotation beta:  <span id="rotationBeta"></span> degree</li>
-        <li>rotation gamma: <span id="rotationGamma"></span> degree</li>
-    </ul>
-</div>
-  <script>
-      $( function()
-        {            
-            for( var i = 1 ; i < 5 ; i++ )
-            {   $('#SERVO'+i).mousemove( function()
-                    {
-                        $('#'+this.id+'Value').text( this.value ); 
-                        var msg = this.id + ":" + this.value + ";";//"" + String( this.id ) + ":" + String( this.value ) + ";";
-                        //console.log( msg );
+							wsConnection.onopen = function() {
+								$("#message-top").html('Websocket open!');
+								wsConnection
+										.send('Message from Browser to ESP8266 yay its Working!! '
+												+ new Date());
+								wsConnection.send('ping');
+								setInterval(function() {
+									wsConnection.send('Time: ' + new Date());
+								}, 20);
+							};
 
-                        if (connection && connection.readyState == 1)	connection.send(msg);
-                    } );
-                $('#SERVO'+i).change();
-                $('#SERVO'+i).change( function(){ $('#SERVO'+i).mousemove(); } );    
-             }      
-        }
-      );  
-      var pointerEventToXY = function(e){
-      //e.preventDefault();
-      var out = {x:0, y:0};
-      if(e.type == 'touchstart' || e.type == 'touchmove' || e.type == 'touchend' || e.type == 'touchcancel'){
-        var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
-        out.x = touch.pageX;
-        out.y = touch.pageY;
-      } else if (e.type == 'mousedown' || e.type == 'mouseup' || e.type == 'mousemove' || e.type == 'mouseover'|| e.type=='mouseout' || e.type=='mouseenter' || e.type=='mouseleave') {
-        out.x = e.pageX;
-        out.y = e.pageY;
+							wsConnection.onerror = function(error) {
+								$("#message-top").html('WebSocket Error ');
+								console.log('WebSocket Error ', error);
+							};
 
-      }
-	  
-	  if( e.type == 'touchstart'|| e.type == 'mousedown' ) 
-	  { 
-		f_down = true;
-		$('#border').attr('fill-opacity','.5').attr( 'fill' , 'rgb(0,128,0)' );
-	  }
-	  if( e.type == 'touchmove'|| e.type == 'mousemove' ) 
-	  { 
-		if( f_down ) { send_to_car( out.x , out.y ); f_no_zero = true; }
-			       
-		else 		 { if( f_no_zero ) { send_to_car( 300 , 300 ); f_no_zero = false;} }
+							wsConnection.onmessage = function(e) {
+								$("#message-top").html('Server: ' + e.data);
+								console.log('Server: ', e.data);
+							};
+						});
+	</script>
+	<div class="container">
+		<div class="header">
+			<nav>
+				<ul class="nav nav-pills pull-right">
+					<li role="presentation" class="active"><a href="/">Status</a></li>
+					<li role="presentation"><a href="/config.html">Configuration</a></li>
+				</ul>
+			</nav>
+			<h3 class="text-muted">WEB UI controller</h3>
+		</div>
+		<div class="row">
+			<h2>&nbsp;</h2>
+			<div id="message-top" class="alert alert-warning"></div>
+			<div class="col-xs-offset-0 col-md-offset-0 col-xs-6 col-md-6 ">
+				<div class="panel panel-default">
+					<div class="panel-heading ">
+						<h3 class="panel-title ">Joystick</h3>
+					</div>
+					<div class="panel-body ">
+						<div id="joystick-content"></div>
+						<script src="nipplejs.js" charset="utf-8"></script>
+						<script>
+							var absJoyPos = {
+								"force" : 0,
+								"angle" : 0,
+								"direction" : 0
+							};
 
-	  }
-	  if( e.type == 'touchend'|| e.type == 'mouseup' ) 
-	  { 
-		f_down = false;
-		$('#border').attr( 'fill' , 'none' );
-	  }
-	  
-	  $(".js-label").text( out.x+" , "+out.y );
-      return out;
-    };
-  
-    $('.js-field-t').on('mousedown touchstart touchmove mousemove touchend mouseup', function(e){ //
-        pointerEventToXY(e); // will return obj ..kind of {x:20,y:40}
-	});
-  
-   var f_down = false;
-   var f_no_zero = true;
-   var f_connection = false;
-	
-  $(".js-field").mousedown( function( evt ) { f_down  = true; } );  
-  $(".js-field").mouseup( function( evt ) { f_down = false; } );
+							var whillPower = { "left" : 0 , "right" : 0 };
+							/* ------------------ MOTORS POWER ---------------------- */
+							function calcMotorPower(data) {
+								
+								whillPower.left  = Math.round( absJoyPos.force * Math.cos( absJoyPos.angle - Math.PI/4  ) );
+								whillPower.right = Math.round( absJoyPos.force * Math.sin( absJoyPos.angle - Math.PI/4  ) );
+							
+								if( whillPower.left  > 100  ) whillPower.left  =  100;
+								if( whillPower.right > 100  ) whillPower.right =  100;
+								if( whillPower.left  < -100 ) whillPower.left  = -100;
+								if( whillPower.right < -100 ) whillPower.right = -100;
+							
+								var msg = "X:" + String( whillPower.left ) + ";" +"Y:" + String( -whillPower.right ) + ";" ;
+								
+								if( typeof wsConnection !== "undefined" && wsConnection.readyState == 1 ) { wsConnection.send( msg ); }
+							
+								if ("force" in data) {
+									var force = data.force;
+									//if (force > 1) force = 1;
+									force = force * 100; // in percent									
+									absJoyPos.force = force;
+								}
 
-  $(".js-field").mousemove( 
-	function( evt )
-	{	
-		if( f_down ) send_to_car( evt.pageX , evt.pageY );
-		else         send_to_car( 300 , 300 );
-	}
-  );  
+								if ("angle" in data)
+									absJoyPos.angle = data.angle.radian;
 
-  
-  function truncate(value) { if (value < 0) { return Math.ceil(value); } return Math.floor(value); }
-  
-  function send_to_car(dx, dy) 
-  {
-     dx -= 300;
-     dy -= 300;
-     var x = truncate((dx / 300) * 1024 * 2);
-     var y = truncate((dy / 300) * 1024 * 2);
-     var speedL = y + x;
-     var speedR = y - x;
-     msg = "X:" + String(-speedR) + ";Y:" + String(speedL) + ";";
-     if (connection && connection.readyState == 1) connection.send(msg);
-  }
-  
-  var connection = new WebSocket('ws://'+location.host+':81/');
+								if ("direction" in data)
+									absJoyPos.direction = data.direction.angle;
+							}
 
-  connection.onopen = function () { var t = setInterval(function()
-	{
-	 if (connection && connection.readyState == 1) 
-		connection.send("adc:1");},300);  };
+							/* ------------------ Joystic events ---------------------- */
+							function bindNipple() {
+								joystick
+										.on('start', function(evt, data) {
+											calcMotorPower(data);
+										})
+										.on('end', function(evt, data) {
+											absJoyPos.force     = 0;
+											absJoyPos.angle     = 0;
+											absJoyPos.direction = 0;
+										})
+										.on('move', function(evt, data) {
+											calcMotorPower(data);
+										})
+										.on(
+												'dir:up   plain:up   dir:left  plain:left'
+														+ 'dir:down plain:down dir:right plain:right',
+												function(evt, data) {
+													calcMotorPower(data);
+												}).on('pressure',
+												function(evt, data) {
+													calcMotorPower(data);
+												});
+							}
 
-   connection.onerror = function (error) 
-   {
-   };
+							/* ------------------ Joystic create ---------------------- */
+							var joystick = nipplejs.create({
+								zone : document
+										.getElementById('joystick-content'),
+								mode : 'static',
+								position : {
+									left : '50%',
+									top : '50%'
+								},
+								color : 'green',
+								size : 400
+							});
 
-   connection.onmessage = function (e) 
-   {  
-    var carData = JSON.parse( e.data);
-    if( "adc" in carData ) $('#ADCValue').text( carData.adc );
-    if( "vcc" in carData ) $('#VCCValue').text( carData.vcc );
-    //console.log( carData );
-    if( "accel" in carData )
-    {
-        $('#accelerationX').text( carData.accel[0] );
-        $('#accelerationY').text( carData.accel[1] );
-        $('#accelerationZ').text( carData.accel[2] );
-    }
-    if( "gyro" in carData )
-    {
-        $('#rotationAlpha').text( carData.gyro[0] );
-        $('#rotationBeta' ).text( carData.gyro[1] );
-        $('#rotationGamma').text( carData.gyro[2] );
-    }
-   	//console.log('Server: ', carData );
+							bindNipple();
 
-   };
-   
-   connection.onclose = function( event ) {   }
+							joystick.on('start move end dir plain', function(
+									evt, nipple) {
 
-   </script>
+								$("#jForce").html("Force: " + Math.round( absJoyPos.force ) + " %");
+								$("#jAngle").html("Angle: " + Math.round( absJoyPos.angle ) + " deg");
+								$("#jRightMotor").html("Right Power: " + whillPower.right + " %");
+								$("#jLeftMotor").html("Left Power: " + whillPower.left + " %");
+							});
+						</script>
+					</div>
+				</div>
+			</div>
+			<!--			<div class="col-xs-offset-0 col-md-offset-0 col-xs-6 col-md-6 ">
+				<div class="panel panel-default">
+					<div class="panel-heading ">
+						<h3 class="panel-title ">Video</h3>
+					</div>
+					<div class="panel-body ">
+						<img src="http://pihost.local:8080/?action=stream" />
+					</div>
+				</div>
+			</div> -->
+			<div class="col-xs-offset-0 col-md-offset-0 col-xs-6 col-md-6 ">
+				<div class="panel panel-default">
+					<div class="panel-heading ">
+						<h3 class="panel-title ">Position</h3>
+					</div>
+					<div class="panel-body ">
+						<h1 id="jForce" class="text-left main">force: ...</h1>
+						<h1 id="jAngle" class="text-left main">angle: ...</h1>
+						<h1 id="jDirAlpha" class="text-left main">dirAlpha : ...</h1>
+						<h1 id="jLeftMotor" class="text-left main">LeftWhillPower : ...</h1>
+						<h1 id="jRightMotor" class="text-left main">RightWhillPower : ...</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
 
-  </body>
 </html>

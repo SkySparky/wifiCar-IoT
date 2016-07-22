@@ -1,0 +1,15 @@
+eclipse.preferences.version=1
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.1135534147/ESP_HOME/delimiter=;
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.1135534147/ESP_HOME/operation=replace
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.1135534147/ESP_HOME/value=c\:\\Espressif
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.1135534147/ESP_SDK/delimiter=;
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.1135534147/ESP_SDK/operation=append
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.1135534147/ESP_SDK/value=C\:\\Espressif\\ESP8266_RTOS_SDK
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.1135534147/PATH/delimiter=;
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.1135534147/PATH/operation=replace
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.1135534147/PATH/value=C\:\\tools\\esptool2;C\:\\tools\\mingw64\\msys\\1.0\\bin
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.1135534147/SMING_HOME/delimiter=;
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.1135534147/SMING_HOME/operation=replace
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.1135534147/SMING_HOME/value=C\:\\tools\\SmingRTOS\\sming
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.1135534147/append=true
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.1135534147/appendContributed=false

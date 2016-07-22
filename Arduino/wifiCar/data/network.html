@@ -1,0 +1,70 @@
+<title>
+    WiFi remove control</title>
+
+<!-- Bootstrap core -->
+<link href="bootstrap.css.gz" rel="stylesheet">
+<style>
+    .main {
+        font-size: 32px;
+    }
+</style>
+
+<head>
+    <script type="text/javascript" src="jquery.js.gz"></script>
+    <script type="text/javascript" src="underscore-min.js"></script>
+    <script type="text/javascript" src="backbone-min.js"></script>
+    <script type="text/javascript" src="joystick_view.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    <li role="presentation"><a href="/">Status</a></li>
+                    <li role="presentation" ><a href="/config.html">Configuration</a></li>
+                    <li role="presentation" class="active" ><a href="/network.html">Network</a></li>
+                </ul>
+            </nav>
+            <h3 class="text-muted">Controller config</h3>
+        </div>
+        <div class="row">
+            <h2>&nbsp;</h2>
+            <div class="col-xs-offset-0 col-md-offset-0">
+                <div class="col-xs-12 col-md-12">
+                    <div class="panel panel-default pull-left">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Joystick</h3>
+                        </div>
+                        <div id="joystickContent">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-offset-0 col-md-offset-0">
+                <div class="col-xs-12 col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Joystick</h3>
+                        </div>
+                        <div class="panel-body">
+                            <h1 id="xVal" class="text-left main"></h1>
+                            <h1 id="yVal" class="text-left main"></h1>
+                        </div>
+
+                        <!--   <div>
+                            x: <span id="xVal" class="text-center main"></span>
+                            <br/> y: <span id="yVal" class="text-center main"></span>
+                            <br/>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

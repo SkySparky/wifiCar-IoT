@@ -1,5 +1,4 @@
-#include <Arduino.h>
-
+#include "wificar.h"
 
 // =================================================================================================================================
 // TODO!!!:
@@ -16,16 +15,8 @@
 #include <WebSocketsServer.h>
 #include <Hash.h>
 #include "wificar.h"
-#include <Servo.h>
-// Arduino Wire library is required if I2Cdev I2CDEV_ARDUINO_WIRE implementation
-// is used in I2Cdev.h
 #include "Wire.h"
 
-// I2Cdev and MPU6050 must be installed as libraries, or else the .cpp/.h files
-// for both classes must be in the include path of your project
-#include "I2Cdev.h"
-
-#include "MPU6050.h"
 // ==================================================================================================================================
 // TODO!!!!:
 // Input name and password for you AP
@@ -34,9 +25,9 @@ const char* password = "SCORPION256";
 // ==================================================================================================================================
 
 //-----------------------------------------------------------
-MOTORS motors;
+MotorsDC motors;
 Servo servo[ 4 ];
-MPU6050 accelgyro;
+//MPU6050 accelgyro;
 
 ESP8266WebServer  server ( 80 );
 WebSocketsServer webSocket = WebSocketsServer( 81 );
@@ -54,17 +45,17 @@ void read_adc( )
 
 bool read_accelgyro( )
 {
-  char str[ 64 ];
-  int16_t ax, ay, az;
-  int16_t gx, gy, gz;  if ( accelgyro.testConnection() )
-  {
-    accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
-    sprintf( str , "{ \"accel\":[ %d,%d,%d],\"gyro\":[%d,%d,%d] }"  , ax , ay , az  , gx , gy , gz );
-    yield();
-    webSocket.sendTXT( 0 ,  str , strlen( str ) );
-    yield();
-    return true;
-  }
+//  char str[ 64 ];
+//  int16_t ax, ay, az;
+//  int16_t gx, gy, gz;  if ( accelgyro.testConnection() )
+//  {
+//    accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
+//    sprintf( str , "{ \"accel\":[ %d,%d,%d],\"gyro\":[%d,%d,%d] }"  , ax , ay , az  , gx , gy , gz );
+//    yield();
+//    webSocket.sendTXT( 0 ,  str , strlen( str ) );
+//    yield();
+//    return true;
+//  }
   return false;
 }
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght)
@@ -187,7 +178,7 @@ void setup()
   //  servo[ 2 ].attach( 1 );
   //  servo[ 3 ].attach( 2 );
   Wire.begin( );
-  accelgyro.initialize(  );
+  //accelgyro.initialize(  );
   Wire.setClock( 400000 );
 
   SPIFFS.begin();

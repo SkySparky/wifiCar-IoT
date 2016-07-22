@@ -1,0 +1,15 @@
+eclipse.preferences.version=1
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.1135534147/ESP_HOME/delimiter=;
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.1135534147/ESP_HOME/operation=replace
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.1135534147/ESP_HOME/value=c\:\\Espressif
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.1135534147/ESP_SDK/delimiter=;
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.1135534147/ESP_SDK/operation=append
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.1135534147/ESP_SDK/value=C\:\\Espressif\\ESP8266_RTOS_SDK
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.1135534147/PATH/delimiter=;
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.1135534147/PATH/operation=replace
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.1135534147/PATH/value=C\:\\tools\\esptool2;C\:\\tools\\mingw64\\msys\\1.0\\bin;D\:/Program Files/Java/bin/server;D\:/Program Files/Java/bin;D\:/Program Files/Java/lib/amd64;C\:\\ProgramData\\Oracle\\Java\\javapath;C\:\\Program Files (x86)\\Intel\\iCLS Client\\;C\:\\Program Files\\Intel\\iCLS Client\\;C\:\\Windows\\system32;C\:\\Windows;C\:\\Windows\\System32\\Wbem;C\:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C\:\\Program Files\\Intel\\Intel(R) Management Engine Components\\DAL;C\:\\Program Files\\Intel\\Intel(R) Management Engine Components\\IPT;C\:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\DAL;C\:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\IPT;C\:\\Program Files (x86)\\Intel\\OpenCL SDK\\3.0\\bin\\x86;C\:\\Program Files (x86)\\Intel\\OpenCL SDK\\3.0\\bin\\x64;D\:\\Program Files\\TortoiseHg\\;C\:\\Program Files (x86)\\Skype\\Phone\\;D\:\\Program Files\\TortoiseGit\\bin;D\:\\devtools\\eclipse
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.1135534147/SMING_HOME/delimiter=;
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.1135534147/SMING_HOME/operation=replace
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.1135534147/SMING_HOME/value=C\:\\tools\\SmingRTOS\\sming
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.1135534147/append=true
+environment/project/cdt.managedbuild.toolchain.gnu.mingw.base.1135534147/appendContributed=false

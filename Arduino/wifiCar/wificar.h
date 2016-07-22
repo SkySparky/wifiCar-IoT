@@ -1,18 +1,22 @@
 #ifndef WIFICAR_H
 #define WIFICAR_H
-//+---------------+----------------+--------------------------+------------------------------+
-//|    D1( 14 )   |     D2( 12 )   |         D3( 0 )          |             D4( 2 )          |
-//+---------------+----------------+--------------------------+------------------------------+
-//| PWMA(motor A) | PWMB (motor B) | DA (direction of motor A)|    DB (direction of motor B) |
-//+---------------+----------------+--------------------------+------------------------------+
 
-class MOTORS
+#include <Arduino.h>
+#include <Servo.h>
+#include <Ticker.h>
+#include "config.h"
+
+/** ------------------------------------------------------------------------------------------
+    Класс управления моторами
+*/
+class MotorsDC
 {
   public:
     /**
        Конструктор
     */
-    MOTORS ( int a = 14 , int b = 12 , int da = 0 , int db = 2 ) : PWMA( a ) , PWMB( b ) , DIRA( da ) , DIRB( db ) {}
+    MotorsDC ( int a = PIN_MOTORA_POWER , int b = PIN_MOTORB_POWER , int da = PIN_MOTORA_DIRECTION , int db = PIN_MOTORB_DIRECTION ) 
+    : PWMA( a ) , PWMB( b ) , DIRA( da ) , DIRB( db ) { }
     /**
         Инициализация
     */
@@ -56,7 +60,13 @@ class MOTORS
       analogWrite( PWMB , 0 );
     }
   private:
-    int PWMA, PWMB, DIRA, DIRB;
+  static void tickerCB( );
+  static Ticker ticker;
+  private:
+    /// Номера выводов для управления моторами
+    const int PWMA, PWMB, DIRA, DIRB;
+    /// Постоянная времени
+    const int timeConstMs = MEASURE_TIMECONST;
 };
 
 

@@ -1,0 +1,43 @@
+06:13:24 **** Build of configuration Sming for project wifi-car ****
+make rebuild 
+C+ app/application.cpp
+C+ app/configuration.cpp
+C+ app/server.cpp
+C+ app/webserver.cpp
+AR out/build/app_app.a
+LD out/build/app.out
+
+#Memory / Section info:
+------------------------------------------------------------------------------
+   Section|                   Description| Start (hex)|   End (hex)|Used space
+------------------------------------------------------------------------------
+      data|        Initialized Data (RAM)|    3FFE8000|    3FFE83A4|     932
+    rodata|           ReadOnly Data (RAM)|    3FFE83B0|    3FFEA894|    9444
+       bss|      Uninitialized Data (RAM)|    3FFEA898|    3FFF1F58|   30400
+      text|            Cached Code (IRAM)|    40100000|    40106D20|   27936
+irom0_text|           Uncached Code (SPI)|    4020A000|    40256172|  311666
+Total Used RAM : 40776
+Free RAM : 41144
+Free IRam : 4850
+------------------------------------------------------------------------------
+# Generating image...
+Generate firmware images successully in folder out/firmware.
+Done
+# Generating spiffs_bin
+Checking for spiffs files
+files directory exists. Creating out/firmware/spiff_rom.bin
+Creating rom 'out/firmware/spiff_rom.bin' of size 0x80000 (524288) bytes.
+Adding files in directory 'files'.
+Added 'backbone-min.js' to spiffs (19999 bytes).
+Added 'bootstrap.css.gz' to spiffs (15615 bytes).
+Added 'button.png' to spiffs (14121 bytes).
+Added 'canvas.png' to spiffs (57650 bytes).
+Added 'config.html' to spiffs (2413 bytes).
+Added 'config.js' to spiffs (1161 bytes).
+Added 'index.html' to spiffs (4532 bytes).
+Added 'index.js' to spiffs (605 bytes).
+Added 'joystick_view.js' to spiffs (6505 bytes).
+Added 'jquery.js.gz' to spiffs (32377 bytes).
+Added 'network.html' to spiffs (2418 bytes).
+Added 'underscore-min.js' to spiffs (15626 bytes).
+out/firmware/spiff_rom.bin---------->0x57000
