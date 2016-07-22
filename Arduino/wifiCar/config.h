@@ -2,11 +2,16 @@
 #define CONFIG_H
 
 /* -----------------------------------------------------
- * Custom configurates
- */
+   Custom configurates
+*/
 #define USING_MOTORS          1
 #define USING_ODOMETER        0
 #define USING_SPEEDOMETER     0
+
+#define USE_SERVO_1           1
+#define USE_SERVO_2           1
+#define USE_SERVO_3           0
+#define USE_SERVO_4           0
 
 #define WHILL_DIAMETER_MM     ( 70.0f )
 
@@ -16,19 +21,29 @@
 #define MEASURE_TIMECONST     20
 
 /* -----------------------------------------------------
- *  Defaul WiFi settings
- */
-
-#define AP_NAME             "YOUAPNAME"
-#define AP_PASSWORD         "YOUAPPWD"
+    Defaul WiFi settings
+*/
+#define USING_AP_CLIENT     1
+#define AP_CLIENT_TO_S      20
+#define AP_NAME             "SHL"
+#define AP_PASSWORD         "SCORPION256"
 
 #define USING_SOFTAP        1
 #define SOFTAP_NAME         "ONBOARDAPNAME"
 #define SOFTAP_PASSWORD     "ONBOARDAPPWD"
 
+
+#define WEBSOCKET_TCPPORT   81
+#define HTTPSERVER_TCPPORT  80
+
+#define USING_MDNS_SERVER   1
+#define MDNS_SERVER_NAME    "esp-car"
+
+#define CONSOLE_BAUDRATE    115200
+
 /* -----------------------------------------------------
- *  IO Pins numbers
- */
+    IO Pins numbers
+*/
 
 #define PIN_MOTORA_POWER      14
 #define PIN_MOTORB_POWER      12
@@ -36,15 +51,38 @@
 #define PIN_MOTORA_DIRECTION  0
 #define PIN_MOTORB_DIRECTION  2
 
+#define PIN_SERVO_1           15
+#define PIN_SERVO_2           16
+#define PIN_SERVO_3           1
+#define PIN_SERVO_4           2
+
+void begin_servo( )
+{
+  static Servo servo[ 4 ];
+#if USE_SERVO_1 == 1
+  servo[ 0 ].attach( PIN_SERVO_1 );
+#endif
+#if USE_SERVO_2 == 1
+  servo[ 1 ].attach( PIN_SERVO_2 );
+#endif
+#if USE_SERVO_3 == 1
+  servo[ 2 ].attach( PIN_SERVO_3 );
+#endif
+#if USE_SERVO_4 == 1
+  servo[ 3 ].attach( PIN_SERVO_4 );
+#endif
+
+}
+
 /* -----------------------------------------------------
- *  Derivatives constant
- */
+    Derivatives constant
+*/
 #ifndef M_PI
 #define M_PI                  ( 3.1415f )
 #endif
 
 #if ( USING_ODOMETER == 1 || USING_SPEEDOMETER == 1 ) && defined( WHILL_DIAMETER_MM ) && defined( WHILL_ENCODER_GAPS )
- )
+)
 
 #define WILL_LENGTH           ( WHILL_DIAMETER_MM * 3.1415f )
 
