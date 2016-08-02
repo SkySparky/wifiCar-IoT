@@ -37,37 +37,46 @@ html, body {
 
 <body>
 	<script type="text/javascript">
+		function putToAlert( message , mode ) {		
+			$("#message-top").toggleClass( 'alert-success alert-info alert-warning alert-danger' , false )
+							 .addClass( "alert-" + mode )
+							 .html( message );
+		}
+		
+		var wsConnection;
+		
+		function startWS( )
+		{
+				putToAlert( "[WS] Web-socket started." , 'warning' );
+				wsConnection = new WebSocket( "ws://" + location.host + ":8081/");
+
+				wsConnection.onopen = function( ) {
+					putToAlert('  [WS] Websocket open!', 'success' );
+					f_wsOpened = true;
+					//wsConnection.send('ping');
+				};
+
+				wsConnection.onerror = function( error ) {
+					putToAlert(  '[WS] WebSocket Error ', 'danger' );
+					console.log( '[WS] WebSocket Error ', 'error' );
+				};
+
+				wsConnection.onmessage = function( e ) {
+					putToAlert(  '[WS] Server message: ' + e.data , "info" );
+					//console.log( '[WS] Server: ' + e.data);
+				};
+				wsConnection.onclose = function( ) {
+					putToAlert(  '[WS] Reconnect websocket' , 'warning' );
+					f_wsOpened = false;
+					wsConnection = new WebSocket( "ws://" + location.host + ":8081/");  
+			};
+		}
+		
+		var f_wsOpened = false;
+		
 		$(document)
 				.ready(
-						function() {
-							var posX = 0;
-							var posY = 0;
-							$("#message-top").html('Started!');
-							var wsConnection = new WebSocket(
-									"ws://localhost:8081");
-							//+ location.host + "/" );
-
-							wsConnection.onopen = function() {
-								$("#message-top").html('Websocket open!');
-								wsConnection
-										.send('Message from Browser to ESP8266 yay its Working!! '
-												+ new Date());
-								wsConnection.send('ping');
-								setInterval(function() {
-									wsConnection.send('Time: ' + new Date());
-								}, 20);
-							};
-
-							wsConnection.onerror = function(error) {
-								$("#message-top").html('WebSocket Error ');
-								console.log('WebSocket Error ', error);
-							};
-
-							wsConnection.onmessage = function(e) {
-								$("#message-top").html('Server: ' + e.data);
-								console.log('Server: ', e.data);
-							};
-						});
+						function() { startWS( ); });
 	</script>
 	<div class="container">
 		<div class="header">
@@ -81,7 +90,7 @@ html, body {
 		</div>
 		<div class="row">
 			<h2>&nbsp;</h2>
-			<div id="message-top" class="alert alert-warning"></div>
+			<div id="message-top" class="alert"></div>
 			<div class="col-xs-offset-0 col-md-offset-0 col-xs-6 col-md-6 ">
 				<div class="panel panel-default">
 					<div class="panel-heading ">
@@ -89,7 +98,7 @@ html, body {
 					</div>
 					<div class="panel-body ">
 						<div id="joystick-content"></div>
-						<script src="nipplejs.js" charset="utf-8"></script>
+						<script src="nipplejs.min.js" charset="utf-8"></script>
 						<script>
 							var absJoyPos = {
 								"force" : 0,
@@ -101,8 +110,8 @@ html, body {
 							/* ------------------ MOTORS POWER ---------------------- */
 							function calcMotorPower(data) {
 								
-								whillPower.left  = Math.round( absJoyPos.force * Math.cos( absJoyPos.angle - Math.PI/4  ) );
-								whillPower.right = Math.round( absJoyPos.force * Math.sin( absJoyPos.angle - Math.PI/4  ) );
+								whillPower.left  = Math.round( absJoyPos.force * Math.cos( absJoyPos.angle - Math.PI / 4 ) );
+								whillPower.right = Math.round( absJoyPos.force * Math.sin( absJoyPos.angle - Math.PI / 4 ) );
 							
 								if( whillPower.left  > 100  ) whillPower.left  =  100;
 								if( whillPower.right > 100  ) whillPower.right =  100;
@@ -111,11 +120,14 @@ html, body {
 							
 								var msg = "X:" + String( whillPower.left ) + ";" +"Y:" + String( -whillPower.right ) + ";" ;
 								
-								if( typeof wsConnection !== "undefined" && wsConnection.readyState == 1 ) { wsConnection.send( msg ); }
-							
+								if( wsConnection && f_wsOpened )
+								{
+									//console.log( '[WS] calc: ' + wsConnection.readyState );
+									if( wsConnection || wsConnection.readyState == 1 ) { wsConnection.send( msg ); console.log( msg ); }
+								}
+								
 								if ("force" in data) {
 									var force = data.force;
-									//if (force > 1) force = 1;
 									force = force * 100; // in percent									
 									absJoyPos.force = force;
 								}
@@ -130,23 +142,31 @@ html, body {
 							/* ------------------ Joystic events ---------------------- */
 							function bindNipple() {
 								joystick
-										.on('start', function(evt, data) {
-											calcMotorPower(data);
-										})
-										.on('end', function(evt, data) {
-											absJoyPos.force     = 0;
-											absJoyPos.angle     = 0;
-											absJoyPos.direction = 0;
-										})
-										.on('move', function(evt, data) {
-											calcMotorPower(data);
-										})
 										.on(
-												'dir:up   plain:up   dir:left  plain:left'
-														+ 'dir:down plain:down dir:right plain:right',
+												'start', 
 												function(evt, data) {
 													calcMotorPower(data);
-												}).on('pressure',
+										})
+										.on(
+												'end', 
+												function(evt, data) {
+													absJoyPos.force     = 0;
+													absJoyPos.angle     = 0;
+													absJoyPos.direction = 0;
+													calcMotorPower(data);
+										})
+										.on(
+												'move', 
+												function(evt, data) {
+													calcMotorPower(data);
+										})
+										.on(
+												'dir:up plain:up dir:left plain:left dir:down plain:down dir:right plain:right',
+												function(evt, data) {
+													calcMotorPower(data);
+												})
+										.on(
+												'pressure',
 												function(evt, data) {
 													calcMotorPower(data);
 												});
