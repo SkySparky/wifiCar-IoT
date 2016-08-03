@@ -1,31 +1,40 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html>
   <head>
-    <meta charset="UTF-8">
-    <title>WiFi-Bot by SkySparky</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-  </head>
-  <body>
-    <section class="page-header">
-      <h1 class="project-name">WiFi-Bot</h1>
-      <h2 class="project-tagline">ESP-12E based board for wifi controllered bot.</h2>
-      <a href="https://github.com/SkySparky/wifiCar-IoT" class="btn">View on GitHub</a>
-      <a href="https://github.com/SkySparky/wifiCar-IoT/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/SkySparky/wifiCar-IoT/tarball/master" class="btn">Download .tar.gz</a>
-    </section>
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
 
-    <section class="main-content">
-      <h3>
-<a id="Описание-проекта" class="anchor" href="#%D0%9E%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Описание проекта.</h3>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>WiFi-Bot by SkySparky</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>WiFi-Bot</h1>
+        <h2>ESP-12E based board for wifi controllered bot.</h2>
+        <a href="https://github.com/SkySparky/wifiCar-IoT" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="Описание-проекта" class="anchor" href="#%D0%9E%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Описание проекта.</h1>
 
 <p>WiFi-Bot - это электронный конструктор предназначенный для управления различными подвижными платформами, и имеет возможностью беспроводного подключения к сети Internet сети через локальные точки доступа WiFi (AP - Access Point) и/или выполнять роль AP. </p>
 
-<h3>
-<a id="Аппаратные-особенности-и-назначение-клемм" class="anchor" href="#%D0%90%D0%BF%D0%BF%D0%B0%D1%80%D0%B0%D1%82%D0%BD%D1%8B%D0%B5-%D0%BE%D1%81%D0%BE%D0%B1%D0%B5%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D0%B8-%D0%B8-%D0%BD%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BA%D0%BB%D0%B5%D0%BC%D0%BC" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Аппаратные особенности и назначение клемм</h3>
+<h1>
+<a id="Аппаратные-особенности-и-назначение-клемм" class="anchor" href="#%D0%90%D0%BF%D0%BF%D0%B0%D1%80%D0%B0%D1%82%D0%BD%D1%8B%D0%B5-%D0%BE%D1%81%D0%BE%D0%B1%D0%B5%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D0%B8-%D0%B8-%D0%BD%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BA%D0%BB%D0%B5%D0%BC%D0%BC" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Аппаратные особенности и назначение клемм</h1>
 
 <p><a href="https://bitbucket.org/lartiot/wifi-bot-code/downloads/wifi-car-schematic.pdf">Электрическая схема</a></p>
 
@@ -38,57 +47,73 @@
 
 <p><img src="https://bitbucket.org/repo/pkapBE/images/2795471447-2016-05-27_22-01-25.png" alt=""></p>
 
-<h3>
-<a id="Разработка-программного-обеспечения" class="anchor" href="#%D0%A0%D0%B0%D0%B7%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B0-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE-%D0%BE%D0%B1%D0%B5%D1%81%D0%BF%D0%B5%D1%87%D0%B5%D0%BD%D0%B8%D1%8F" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Разработка программного обеспечения</h3>
+<h1>
+<a id="Разработка-программного-обеспечения" class="anchor" href="#%D0%A0%D0%B0%D0%B7%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B0-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE-%D0%BE%D0%B1%D0%B5%D1%81%D0%BF%D0%B5%D1%87%D0%B5%D0%BD%D0%B8%D1%8F" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Разработка программного обеспечения</h1>
 
 <p>Особенности разработки программного обеспечения (ПО) для платы конструктора удобно изучать c использованием библиотек Arduinо. Для разработки более сложного ПО можно воспользоваться набором официальных библиотек с сайта компании Espressif или использовать сторонние, например <a href="https://github.com/SmingHub/Sming">Sming SDK</a> основанные на синтаксисе библиотек Arduino. 
 Примеры программ представленные здесь разработаны либо на основе библиотек Arduino, либо SmingRTOS (вариант Sming SDK с операционной FreeRTOS).</p>
 
-<h3>
-<a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Getting started</h3>
+<h1>
+<a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Getting started</h1>
 
 <h2>
 <a id="Установка-и-настройка-программного-обеспечения" class="anchor" href="#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0-%D0%B8-%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE-%D0%BE%D0%B1%D0%B5%D1%81%D0%BF%D0%B5%D1%87%D0%B5%D0%BD%D0%B8%D1%8F" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Установка и настройка программного обеспечения</h2>
 
 <ol>
-<li>Установите среду программирования <a href="http://arduino.cc/">Arduino IDE</a>;</li>
-<li>После запуска Arduino IDE установите поддержку микроконтроллера ESP8266, для этого перейдите в меню "Настройки"(Файл-&gt;Настройки) в поле "Дополнительные ссылки для Менеджера плат" добавьте адрес:
-<code>http://arduino.esp8266.com/stable/package_esp8266com_index.json</code>
-</li>
-<li>В менеджере плат (Инструменты-&gt;Плата: -&gt;Менеджер плат...) выберете из списка "esp8266" и нажмите кнопку установить.</li>
-<li>В меню управления библиотеками (Скетч-&gt;Подключить библиотеку-&gt;Управлять библиотеками...) выберете и установите следующие библиотеки:</li>
-<li>Servo(esp8266);</li>
-<li>WebSocket for Arduino(Server+Client);</li>
-<li>Ticker;</li>
-<li>ESP8266mDNS.</li>
-<li>Подключите к USB порту плату плату конструктора (выключатели должны быть в положении "выключено"). Установите драйвер <a href="http://www.5v.ru/zip/ch341ser.zip">последовательного порта</a>. Определите адрес порта (например, Кнопка Windows-&gt;Устройства и принтеры...) и укажите его в Aduino IDE (Инструменты-&gt;Порты:). </li>
-<li> Установите на компьютере дополнение для поддержки протокола mDNS <a href="https://www.apple.com/ru/support/bonjour/">Bonjour for Windows</a> </li>
+<li><p>Установите среду программирования <a href="http://arduino.cc/">Arduino IDE</a>;</p></li>
+<li><p>После запуска Arduino IDE установите поддержку микроконтроллера ESP8266, для этого перейдите в меню "Настройки"(Файл-&gt;Настройки) в поле "Дополнительные ссылки для Менеджера плат" добавьте адрес:
+<code>http://arduino.esp8266.com/stable/package_esp8266com_index.json</code></p></li>
+<li><p>В менеджере плат (Инструменты-&gt;Плата: -&gt;Менеджер плат...) выберете из списка "esp8266" и нажмите кнопку установить.</p></li>
+<li><p>В меню управления библиотеками (Скетч-&gt;Подключить библиотеку-&gt;Управлять библиотеками...) выберете и установите следующие библиотеки: Servo(esp8266);  WebSocket for Arduino(Server+Client); Ticker; ESP8266mDNS.</p></li>
+<li><p>Подключите к USB порту плату плату конструктора (выключатели должны быть в положении "выключено"). Установите драйвер <a href="http://www.5v.ru/zip/ch341ser.zip">последовательного порта</a>. Определите адрес порта (например, Кнопка Windows-&gt;Устройства и принтеры...) и укажите его в Aduino IDE (Инструменты-&gt;Порты:). Отключите плату по окончанию установки.</p></li>
+<li><p>Скачайте <a href="https://github.com/esp8266/arduino-esp8266fs-plugin/releases/download/0.2.0/ESP8266FS-0.2.0.zip">архив</a> и распакуйте его в каталог tools в папке установки Arduino IDE (путь распаковки архива будет похож на: С:\Program Files (x86)\Arduino\tools)</p></li>
+<li><p>Установите на компьютере дополнение для поддержки протокола mDNS <a href="https://www.apple.com/ru/support/bonjour/">Bonjour for Windows</a> </p></li>
 </ol>
 
 <h2>
 <a id="Подключение-платы-конструктора" class="anchor" href="#%D0%9F%D0%BE%D0%B4%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D0%BB%D0%B0%D1%82%D1%8B-%D0%BA%D0%BE%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D0%BE%D1%80%D0%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Подключение платы конструктора</h2>
 
 <ol>
-<li>На этом этапе у вас должна быть колесная платформа с 2-мя или 4-мя , отсек для 8-ми батарей типа AA и сами батареи;</li>
-<li>Подключите моторы к плате (полярность можно не контролировать и поменять ее после первых испытаний);</li>
-<li>Закрепите плату и моторы и батарейный отсек на колесной платформе;</li>
-<li>Подключите провода батарейного отсека (внимательно следите за полярностью подключения) к клеммам питания H-мостов моторов и установите перемычку JP9 в положение "MOTOR" (таким образом микроконтроллер будет получать питание от одной батареи с моторами);</li>
-<li>Установите перемычки JP2-JP5 (для подключения Н-моста к выводам микроконтроллера);</li>
-<li>Установите батареи питания.</li>
+<li><p>На этом этапе у вас должна быть колесная платформа с 2-мя или 4-мя , отсек для 8-ми батарей типа AA и сами батареи;</p></li>
+<li><p>Подключите моторы к плате (полярность можно не контролировать и поменять ее после первых испытаний);</p></li>
+<li><p>Закрепите плату и моторы и батарейный отсек на колесной платформе;</p></li>
+<li><p>Подключите провода батарейного отсека (внимательно следите за полярностью подключения) к клеммам питания H-мостов 
+моторов и установите перемычку JP9 в положение "MOTOR" (таким образом микроконтроллер будет получать питание от одной батареи с моторами);</p></li>
+<li><p>Установите перемычки JP2-JP5 (для подключения Н-моста к выводам микроконтроллера);</p></li>
+<li><p>Установите батареи питания.</p></li>
 </ol>
 
-<h3>
-<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Support or Contact</h3>
+<h2>
+<a id="Настройка-сборка-и-загрузка-программы" class="anchor" href="#%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0-%D1%81%D0%B1%D0%BE%D1%80%D0%BA%D0%B0-%D0%B8-%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B0-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D1%8B" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Настройка, сборка и загрузка программы</h2>
+
+<ol>
+<li><p>Скачайте <a href="https://github.com/SkySparky/wifiCar-IoT/archive/master.zip">архив</a> проекта. И распакуйте его;</p></li>
+<li><p>Запустите Arduino IDE и откройте проект &lt;Каталог где распакован архив&gt;/Arduino/wifiCar/wifiCar.ino;</p></li>
+<li>
+</ol>
+
+<h1>
+<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Support or Contact</h1>
 
 <p>Spark mail: <a href="mailto:skyspark@yandex.ru">skyspark@yandex.ru</a></p>
+        </section>
 
-      <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/SkySparky/wifiCar-IoT">WiFi-Bot</a> is maintained by <a href="https://github.com/SkySparky">SkySparky</a>.</span>
+        <aside id="sidebar">
+          <a href="https://github.com/SkySparky/wifiCar-IoT/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/SkySparky/wifiCar-IoT/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
 
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
-      </footer>
+          <p class="repo-owner"><a href="https://github.com/SkySparky/wifiCar-IoT"></a> is maintained by <a href="https://github.com/SkySparky">SkySparky</a>.</p>
 
-    </section>
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
 
   
   </body>
