@@ -1,34 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <meta charset="UTF-8">
+    <title>WiFi-Bot by SkySparky</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-    <title>WiFi-Bot by SkySparky</title>
   </head>
-
   <body>
-    <header>
-      <div class="inner">
-        <h1>WiFi-Bot</h1>
-        <h2>ESP-12E based board for wifi controllered bot.</h2>
-        <a href="https://github.com/SkySparky/wifiCar-IoT" class="button"><small>View project on</small> GitHub</a>
-      </div>
-    </header>
+    <section class="page-header">
+      <h1 class="project-name">WiFi-Bot</h1>
+      <h2 class="project-tagline">ESP-12E based board for wifi controllered bot.</h2>
+      <a href="https://github.com/SkySparky/wifiCar-IoT" class="btn">View on GitHub</a>
+      <a href="https://github.com/SkySparky/wifiCar-IoT/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/SkySparky/wifiCar-IoT/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <h1>
+    <section class="main-content">
+      <h1>
 <a id="Описание-проекта" class="anchor" href="#%D0%9E%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Описание проекта.</h1>
 
 <p>WiFi-Bot - это электронный конструктор предназначенный для управления различными подвижными платформами, и имеет возможностью беспроводного подключения к сети Internet сети через локальные точки доступа WiFi (AP - Access Point) и/или выполнять роль AP. </p>
@@ -63,10 +54,10 @@
 <li><p>Установите среду программирования <a href="http://arduino.cc/">Arduino IDE</a>;</p></li>
 <li><p>После запуска Arduino IDE установите поддержку микроконтроллера ESP8266, для этого перейдите в меню "Настройки"(Файл-&gt;Настройки) в поле "Дополнительные ссылки для Менеджера плат" добавьте адрес:
 <code>http://arduino.esp8266.com/stable/package_esp8266com_index.json</code></p></li>
-<li><p>В менеджере плат (Инструменты-&gt;Плата: -&gt;Менеджер плат...) выберете из списка "esp8266" и нажмите кнопку установить.</p></li>
-<li><p>В меню управления библиотеками (Скетч-&gt;Подключить библиотеку-&gt;Управлять библиотеками...) выберете и установите следующие библиотеки: Servo(esp8266);  WebSocket for Arduino(Server+Client); Ticker; ESP8266mDNS.</p></li>
-<li><p>Подключите к USB порту плату плату конструктора (выключатели должны быть в положении "выключено"). Установите драйвер <a href="http://www.5v.ru/zip/ch341ser.zip">последовательного порта</a>. Определите адрес порта (например, Кнопка Windows-&gt;Устройства и принтеры...) и укажите его в Aduino IDE (Инструменты-&gt;Порты:). Отключите плату по окончанию установки.</p></li>
-<li><p>Скачайте <a href="https://github.com/esp8266/arduino-esp8266fs-plugin/releases/download/0.2.0/ESP8266FS-0.2.0.zip">архив</a> и распакуйте его в каталог tools в папке установки Arduino IDE (путь распаковки архива будет похож на: С:\Program Files (x86)\Arduino\tools)</p></li>
+<li><p>В менеджере плат (<code>Инструменты-&gt;Плата: -&gt;Менеджер плат...</code>) выберете из списка <code>"esp8266"</code> и нажмите кнопку установить.</p></li>
+<li><p>В меню управления библиотеками (Скетч-&gt;Подключить библиотеку-&gt;Управлять библиотеками...) выберете и установите следующие библиотеки: <code>Servo(esp8266)</code>;  <code>WebSocket for Arduino(Server+Client)</code>; <code>Ticker</code>; <code>ESP8266mDNS</code>.</p></li>
+<li><p>Подключите к USB порту плату плату конструктора (выключатели должны быть в положении "выключено"). Установите драйвер <a href="http://www.5v.ru/zip/ch341ser.zip">последовательного порта</a>. Определите адрес порта (например, <code>Кнопка Windows-&gt;Устройства и принтеры...</code>) и укажите его в Aduino IDE (<code>Инструменты-&gt;Порты:</code>). Отключите плату по окончанию установки.</p></li>
+<li><p>Скачайте <a href="https://github.com/esp8266/arduino-esp8266fs-plugin/releases/download/0.2.0/ESP8266FS-0.2.0.zip">архив</a> и распакуйте его в каталог tools в папке установки Arduino IDE (путь распаковки архива будет вида: <code>С:\Program Files (x86)\Arduino\tools\</code>)</p></li>
 <li><p>Установите на компьютере дополнение для поддержки протокола mDNS <a href="https://www.apple.com/ru/support/bonjour/">Bonjour for Windows</a> </p></li>
 </ol>
 
@@ -89,6 +80,30 @@
 <ol>
 <li><p>Скачайте <a href="https://github.com/SkySparky/wifiCar-IoT/archive/master.zip">архив</a> проекта. И распакуйте его;</p></li>
 <li><p>Запустите Arduino IDE и откройте проект &lt;Каталог где распакован архив&gt;/Arduino/wifiCar/wifiCar.ino;</p></li>
+<li><p>В меню <code>Инструменты-&gt;Плата...</code> выберете плату: <code>Generic ESP8266 Module</code> (если она не была выбрана) и настройте как показано на рисунке (метка 1).
+<a href="https://bytebucket.org/lartiot/wifi-bot-code/raw/9ed84f619fc804b6c4ad4c17ad06c2362e8e54e5/Doc/2016-08-03_11-29-07.png">настройка свойств платы</a></p></li>
+<li>
+<p>Откройте вкладку <code>config.h</code> найдите место в коде:
+`
+/// TODO: Впишите название своей точки и пароль к ней</p>
+
+<h1>
+<a id="define-ap_name-------------login" class="anchor" href="#define-ap_name-------------login" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>define AP_NAME             "login"</h1>
+
+<h1>
+<a id="define-ap_password---------password" class="anchor" href="#define-ap_password---------password" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>define AP_PASSWORD         "password"</h1>
+
+<p><code>
+и впишите имя (вместо слова</code>login<code>) и пароль (вместо слова</code>password`) доступа к вашей локальной AP.</p>
+</li>
+<li><p>Подключите плату к компьютеру, и нажмите кнопку <code>"Загрузка"</code> (метка 2 на рисунке);</p></li>
+<li><p>Если загрузка прошла успешно, то откройте вкладку меню <code>"Инструменты"</code> и нажмите <code>"ESP8266 Sketch Data Upload"</code> (если у вас такой кнопки нет проверьте правильно ли вы выполнили п.6 раздела "Установка и настройка программного обеспечения") должна начаться сборка и загрузка файловой системы дождитесь ее окончания. </p></li>
+</ol>
+
+<h2>
+<a id="Подключение-к-плате-конструктора-и-управление-параметрами" class="anchor" href="#%D0%9F%D0%BE%D0%B4%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BA-%D0%BF%D0%BB%D0%B0%D1%82%D0%B5-%D0%BA%D0%BE%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D0%BE%D1%80%D0%B0-%D0%B8-%D1%83%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D0%B0%D1%80%D0%B0%D0%BC%D0%B5%D1%82%D1%80%D0%B0%D0%BC%D0%B8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Подключение к плате конструктора и управление параметрами</h2>
+
+<ol>
 <li>
 </ol>
 
@@ -96,24 +111,14 @@
 <a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Support or Contact</h1>
 
 <p>Spark mail: <a href="mailto:skyspark@yandex.ru">skyspark@yandex.ru</a></p>
-        </section>
 
-        <aside id="sidebar">
-          <a href="https://github.com/SkySparky/wifiCar-IoT/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/SkySparky/wifiCar-IoT/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/SkySparky/wifiCar-IoT">WiFi-Bot</a> is maintained by <a href="https://github.com/SkySparky">SkySparky</a>.</span>
 
-          <p class="repo-owner"><a href="https://github.com/SkySparky/wifiCar-IoT"></a> is maintained by <a href="https://github.com/SkySparky">SkySparky</a>.</p>
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
 
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
-    </div>
+    </section>
 
   
   </body>
