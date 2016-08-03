@@ -25,8 +25,8 @@
 */
 #define USING_AP_CLIENT     1
 #define AP_CLIENT_TO_S      20
-#define AP_NAME             "SHL"
-#define AP_PASSWORD         "SCORPION256"
+#define AP_NAME             "YOUAPNAME"
+#define AP_PASSWORD         "YOUAPPASWORD"
 
 #define USING_SOFTAP        1
 #define SOFTAP_NAME         "ONBOARDAPNAME"
