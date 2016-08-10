@@ -1,5 +1,7 @@
 # WiFi-Bot #
 
+[Внешний dbl c платформой](https://skysparky.github.io/wifiCar-IoT/);
+
 [Подробное описание. Начало работы с WiFi-Bot.](https://skysparky.github.io/wifiCar-IoT/)
 
 ![Электрическая схема](https://bitbucket.org/lartiot/wifi-bot-code/downloads/wifi-car-schematic.pdf)
